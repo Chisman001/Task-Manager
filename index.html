@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="first-page active">
+      <img src="download (2).jpg" alt="profile picture" class="profile-pic">
+      <div class="intro-section">
+        <p>Good morning, John!</p>
+        <h1>You have <span id="total-tasks">0</span> tasks available <span>&#128077;</span></h1>
+      </div>
+      <div class="task-search-section">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="task-search" placeholder="Search a task...">
+      </div>
+      <div class="status">
+        <div class="icon todo">
+          <i class="fa-regular fa-file-lines" id="todoBtn"></i>
+          <p>To-Do</p>
+        </div>
+
+        <div class="icon progress">
+          <i class="fa-solid fa-hourglass-half" id="progressBtn"></i>
+          <p>Progress</p>
+        </div>
+
+        <div class="icon done">
+          <i class="fa-solid fa-check" id="doneBtn"></i>
+          <p>Done</p>
+        </div>
+      </div>
+      <div class="task-display">
+        <div class="header">
+          <h2>Tasks</h2>
+          <p id="display-tasks">See all</p>
+        </div>
+        <div class="tasks-list">
+          <!-- Tasks without descriptions are being added-->
+
+        </div>
+
+      </div>
+
+    </div>
+    <div class="second-page ">
+      <div class="header-section">
+        <i class="fa-solid fa-arrow-left back-btn" id="back-btn"></i>
+        <button id="open-modal"> + Add Task</button>
+      </div>
+
+      <div class="modal" id="todoModal">
+        <div class="modal-content">
+          <h2>Add Todo</h2>
+
+          <input type="text" id="todo-title" placeholder="Todo title">
+          <textarea id="todo-desc" placeholder="Description"></textarea>
+
+          <div class="actions">
+            <button id="add-todo">Add</button>
+            <button id="close-modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="todo-display">
+        <!-- Todos with descriptions are being added-->
+
+      </div>
+    </div>
+    <div class="page todo-page">
+      <div class="header-section">
+        <i class="fa-solid fa-arrow-left back-btn2" id="todo-back-btn"></i>
+        <h2>Todo Tasks</h2>
+      </div>
+      <div class="todo-content">
+        <!-- Todo content will be added here-->
+      </div>
+    </div>
+    <div class="page progress-page">
+      <div class="header-section">
+        <i class="fa-solid fa-arrow-left back-btn3" id="progress-back-btn"></i>
+        <h2>Tasks in Progress</h2>
+      </div>
+      <div class="progress">
+        <!-- Progress content will be added here-->
+      </div>
+    </div>
+    <div class="page done-page">
+      <div class="header-section">
+        <i class="fa-solid fa-arrow-left back-btn4" id="done-back-btn"></i>
+        <h2>Completed tasks</h2>
+      </div>
+      <div class="done">
+        <!-- Doone content will be added here-->
+      </div>
+    </div>
+    <div class="task-modal">
+      <div class="task-modal-content">
+        <div class="header">
+          <h2 id="task-task"></h2>
+          <div class="icon-section">
+            <div class="todoi">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+            <div class="progressi">
+              <i class="fa-solid fa-hourglass-half progressi"></i>
+            </div>
+            <div class="donei">
+              <i class="fa-solid fa-check donei"></i>
+            </div>
+          </div>
+        </div>
+        <p id="task-description"></p>
+
+        <div class="actions">
+          <button id="update-task">update</button>
+          <button id="delete-task">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="update-modal">
+      <div class="update-modal-content">
+        <h2>Update Todo</h2>
+
+        <input type="text" id="update-todo-title" placeholder="Todo title">
+        <textarea id="update-todo-desc" placeholder="Description"></textarea>
+
+        <div class="actions">
+          <button id="update-todo">Update</button>
+          <button id="close-modal2">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
