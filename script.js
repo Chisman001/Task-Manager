@@ -3,6 +3,7 @@ const taskInput = document.getElementById('task-input');
 const addTodoBtn = document.getElementById('add-todo');
 const taskList = document.querySelector('.tasks-list');
 const todoDisplay = document.querySelector('.todo-display');
+const todoContent = document.querySelector('.todo-content');
 const clearCompletedBtn = document.getElementById('clear-completed-btn');
 const seeAll = document.getElementById('display-tasks');
 const todoBtn = document.querySelector('.todo');
@@ -44,11 +45,27 @@ closeModalBtn.addEventListener('click', function() {
 });
 
 //declaring todos array progress and done arrays
+let allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 let todos = JSON.parse(localStorage.getItem('todos')) || [];
+let progress = JSON.parse(localStorage.getItem('progress')) || [];
+let done = JSON.parse(localStorage.getItem('done')) || [];
+
 
 // send todo items to local storage
+function saveAllTasks() {
+  localStorage.setItem('allTasks', JSON.stringify(allTasks));
+}
+
 function saveTodos() {
   localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function saveProgress() {
+  localStorage.setItem('progress', JSON.stringify(progress));
+}
+
+function saveDone() {
+  localStorage.setItem('done', JSON.stringify(done));
 }
 
 // Add todo item 
@@ -60,10 +77,13 @@ addTodoBtn.addEventListener('click', function (e) {
   const desc = todoDescInput.value.trim();
 
   if (title && desc) {
+    allTasks.push({ title, desc, status: 'Todo' });
     todos.push({ title, desc, status: 'Todo' });
-    saveTodos();
 
-    renderTodos();
+    saveTodos();
+    saveAllTasks();
+
+    renderAllTasks();
     countTasks();
 
     todoTitleInput.value = '';
@@ -73,13 +93,32 @@ addTodoBtn.addEventListener('click', function (e) {
   }
 });
 
-// Initial rendering of todos
+// Render todos function
 function renderTodos() {
+  todoContent.innerHTML = '';
+
+  const sortedTodos = [...allTasks].reverse()
+  sortedTodos.forEach(todo => {
+    if(!todo.title || !todo.desc) return;
+    const task = document.createElement('div');
+    task.innerHTML = `
+      <div class="task">
+        <h3 class="task-title">${todo.title}</h3>
+        <p class="task-desc">${todo.desc}</p>
+      </div>
+    `;
+    
+    todoContent.appendChild(task);
+  });
+}
+
+// Initial rendering of all tasks on page load
+function renderAllTasks() {
   taskList.innerHTML = '';
   todoDisplay.innerHTML = '';
 
-  const sortedTodos = [...todos].reverse()
-  sortedTodos.forEach(todo => {
+  const sortedTasks = [...allTasks].reverse()
+  sortedTasks.forEach(todo => {
     if(!todo.title || !todo.desc) return;
     const task = document.createElement('div');
     const todoItem = document.createElement('div');
@@ -102,7 +141,7 @@ function renderTodos() {
 
 //Find number of tasks
 function countTasks() {
-  let counter = todos.length;
+  let counter = allTasks.length;
   document.getElementById('total-tasks').innerText = counter;
 }
 
@@ -134,8 +173,9 @@ todoDisplay.addEventListener('click', function(e) {
 //Delete the clicked task with delete button
 deleteTaskBtn.addEventListener('click', function() {
   const titleToDelete = document.getElementById('task-task').innerText;
-  todos = todos.filter(todo => todo.title !== titleToDelete);
-  saveTodos();
+  allTasks = allTasks.filter(todo => todo.title !== titleToDelete);
+  saveAllTasks();
+  renderAllTasks();
   renderTodos();
   countTasks();
   document.querySelector('.task-modal').classList.remove('active1');
@@ -227,6 +267,6 @@ searchInput.addEventListener('input', function() {
 });
 
 //Render todos on page load
-
+renderAllTasks()
 renderTodos()
 countTasks();

@@ -418,7 +418,7 @@ body{
   font-weight: 400;
 }
 
-.todo-display{
+.todo-display, .todo-content, .progress-content, .done-content{
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -426,7 +426,7 @@ body{
   max-height: 500px;
 }
 
-.todo-display .task{
+.todo-display .task, .todo-content .task, .progress-content .task, .done-content .task{
   background: #f8d7da;
   padding: 15px;
   border-radius: 12px;
