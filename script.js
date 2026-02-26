@@ -20,6 +20,9 @@ const update = document.getElementById('update-todo');
 const task = document.querySelectorAll('.task');
 const deleteTaskBtn = document.getElementById('delete-task');
 const updateTaskBtn = document.getElementById('update-task');
+const todoChoice = document.querySelector('.todoi')
+const progressChoice = document.querySelector('.progressi')
+const doneChoice = document.querySelector('.donei')
 
 
 // when see all is clicked show next page
@@ -46,9 +49,9 @@ closeModalBtn.addEventListener('click', function() {
 
 //declaring todos array progress and done arrays
 let allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
-let todos = JSON.parse(localStorage.getItem('todos')) || [];
-let progress = JSON.parse(localStorage.getItem('progress')) || [];
-let done = JSON.parse(localStorage.getItem('done')) || [];
+//let todos = JSON.parse(localStorage.getItem('todos')) || [];
+//let progress = JSON.parse(localStorage.getItem('progress')) || [];
+//let done = JSON.parse(localStorage.getItem('done')) || [];
 
 
 // send todo items to local storage
@@ -56,7 +59,7 @@ function saveAllTasks() {
   localStorage.setItem('allTasks', JSON.stringify(allTasks));
 }
 
-function saveTodos() {
+/*function saveTodos() {
   localStorage.setItem('todos', JSON.stringify(todos));
 }
 
@@ -66,7 +69,7 @@ function saveProgress() {
 
 function saveDone() {
   localStorage.setItem('done', JSON.stringify(done));
-}
+}*/
 
 // Add todo item 
 addTodoBtn.addEventListener('click', function (e) {
@@ -78,11 +81,10 @@ addTodoBtn.addEventListener('click', function (e) {
 
   if (title && desc) {
     allTasks.push({ title, desc, status: 'Todo' });
-    todos.push({ title, desc, status: 'Todo' });
+    //todos.push({ title, desc, status: 'Todo' });
 
-    saveTodos();
     saveAllTasks();
-
+    renderTodos();
     renderAllTasks();
     countTasks();
 
@@ -97,20 +99,58 @@ addTodoBtn.addEventListener('click', function (e) {
 function renderTodos() {
   todoContent.innerHTML = '';
 
-  const sortedTodos = [...allTasks].reverse()
-  sortedTodos.forEach(todo => {
-    if(!todo.title || !todo.desc) return;
-    const task = document.createElement('div');
-    task.innerHTML = `
-      <div class="task">
-        <h3 class="task-title">${todo.title}</h3>
-        <p class="task-desc">${todo.desc}</p>
-      </div>
-    `;
-    
-    todoContent.appendChild(task);
-  });
+  allTasks
+    .filter(task => task.status === 'Todo')
+    .reverse()
+    .forEach(task => {
+      const div = document.createElement('div');
+      div.classList.add('task');
+      div.innerHTML = `
+        <h3 class="task-title">${task.title}</h3>
+        <p class="task-desc">${task.desc}</p>
+      `;
+      todoContent.appendChild(div);
+    });
 }
+
+
+//Render progress function
+function renderProgress() {
+  const progressContent = document.querySelector('.progress-content');
+  progressContent.innerHTML = '';
+
+  allTasks
+    .filter(task => task.status === 'Progress')
+    .reverse()
+    .forEach(task => {
+      const div = document.createElement('div');
+      div.classList.add('task');
+      div.innerHTML = `
+        <h3 class="task-title">${task.title}</h3>
+        <p class="task-desc">${task.desc}</p>
+      `;
+      progressContent.appendChild(div);
+    });
+}
+//Render done function
+function renderDone() {
+  const doneContent = document.querySelector('.done-content');
+  doneContent.innerHTML = '';
+
+  allTasks
+    .filter(task => task.status === 'Done')
+    .reverse()
+    .forEach(task => {
+      const div = document.createElement('div');
+      div.classList.add('task');
+      div.innerHTML = `
+        <h3 class="task-title">${task.title}</h3>
+        <p class="task-desc">${task.desc}</p>
+      `;
+      doneContent.appendChild(div);
+    });
+}
+
 
 // Initial rendering of all tasks on page load
 function renderAllTasks() {
@@ -138,6 +178,88 @@ function renderAllTasks() {
     todoDisplay.appendChild(todoItem);
   });
 }
+
+// Move task to different status
+function moveTask(newStatus) {
+  const title = document.getElementById('task-task').innerText;
+
+  allTasks = allTasks.map(task =>
+    task.title === title
+      ? { ...task, status: newStatus }
+      : task
+  );
+
+
+  saveAllTasks();
+  renderAllTasks();
+  renderTodos();
+  renderProgress();
+  renderDone();
+  countTasks();
+}
+
+// Event listeners for status icons
+todoChoice.addEventListener('click', () => {
+  moveTask('Todo')
+  document.querySelector('.task-modal').classList.remove('active1');
+});
+progressChoice.addEventListener('click', () => {
+  moveTask('Progress')
+  document.querySelector('.task-modal').classList.remove('active1');
+});
+doneChoice.addEventListener('click', () => {
+  moveTask('Done')
+  document.querySelector('.task-modal').classList.remove('active1');
+});
+
+
+// Make todo, progress and done icons add the task to respective status when clicked
+todoChoice.addEventListener('click', function() {
+  const title = document.getElementById('task-task').innerText;
+
+  todos = allTasks.map(todo => {
+    if (todo.title === title) {
+      return { ...todo, status: 'Todo' };
+    }
+    return todo;
+  });
+
+
+  saveTodos();
+  renderAllTasks();
+  countTasks();
+});
+
+progressChoice.addEventListener('click', function() {
+  const title = document.getElementById('task-task').innerText;
+
+  progress = allTasks.map(todo => {
+    if (todo.title === title) {
+      return { ...progress, status: 'Progress' };
+    }
+    return todo;
+  });
+  saveProgress();
+  renderProgress();
+  saveAllTasks();
+  renderAllTasks();
+  countTasks();
+});
+
+doneChoice.addEventListener('click', function() {
+  const title = document.getElementById('task-task').innerText;
+
+  allTasks = allTasks.map(todo => {
+    if (todo.title === title) {
+      return { ...todo, status: 'Done' };
+    }
+    return todo;
+  });
+
+  saveAllTasks();
+  renderAllTasks();
+  countTasks();
+});
 
 //Find number of tasks
 function countTasks() {
@@ -201,13 +323,16 @@ update.addEventListener('click', function(e) {
 
   if (title && desc) {
     const currentTitle = document.getElementById('task-task').innerText;
-    todos = todos.map(todo => {
+    allTasks = allTasks.map(todo => {
       if (todo.title === currentTitle) {
         return { ...todo, title, desc };
       }
       return todo;
     });
-    saveTodos();
+    renderAllTasks();
+    saveAllTasks();
+    renderDone();
+    renderProgress();
     renderTodos();
     document.querySelector('.update-modal').classList.remove('active1');
   }

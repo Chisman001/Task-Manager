@@ -23,6 +23,10 @@ body{
   min-height: 540px;
 }
 
+.container .page{
+  min-height: 540px;
+}
+
 .first-page.active{
   display: block;
 }
@@ -440,17 +444,17 @@ body{
   margin-left: 10px;
 }
 
-.todo-display .task:hover{
+.todo-display .task:hover, .todo-content .task:hover, .progress-content .task:hover, .done-content .task:hover{
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transform: scale(1.03);
 }
 
-.todo-display .task h3{
+.todo-display .task h3, .todo-content .task h3, .progress-content .task h3, .done-content .task h3{
   margin-bottom: 10px;
   font-size: 26px;
 }
 
-.todo-display .task p{
+.todo-display .task p, .todo-content .task p, .progress-content .task p, .done-content .task p{
   font-size: 18px;
   opacity: 0.8;
   font-weight: 400;
@@ -517,6 +521,7 @@ body{
   align-items: center;
   margin-bottom: 30px;
   gap: 60px;
+  margin-top: 20px;
 }
 
 .page .header-section i{
