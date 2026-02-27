@@ -80,7 +80,7 @@ addTodoBtn.addEventListener('click', function (e) {
   const desc = todoDescInput.value.trim();
 
   if (title && desc) {
-    allTasks.push({ title, desc, status: 'Todo' });
+    allTasks.push({ id: Date.now(), title, desc, status: 'Todo' });
     //todos.push({ title, desc, status: 'Todo' });
 
     saveAllTasks();
@@ -163,13 +163,13 @@ function renderAllTasks() {
     const task = document.createElement('div');
     const todoItem = document.createElement('div');
     task.innerHTML = `
-      <div class="task">
+      <div class="task" data-id="${todo.id}">
         <h3 class="task-title">${todo.title}</h3>
         <p class="task-desc">${todo.desc}</p>
       </div>
     `;
     todoItem.innerHTML = `
-      <div class="task">
+      <div class="task" data-id="${todo.id}">
         <h3 class="task-title">${todo.title}</h3>
         <p class="task-desc">${todo.desc}</p>
       </div>
@@ -250,7 +250,7 @@ doneChoice.addEventListener('click', function() {
   const title = document.getElementById('task-task').innerText;
 
   allTasks = allTasks.map(todo => {
-    if (todo.title === title) {
+    if (todo.id === clickedId) {
       return { ...todo, status: 'Done' };
     }
     return todo;
@@ -341,6 +341,21 @@ update.addEventListener('click', function(e) {
   updateDescInput.value = '';
 });
 
+//Capture clickedId using event delegation and log it to console
+taskList.addEventListener('click', function(e) {
+  const taskDiv = e.target.closest('.task');
+
+  if (!taskDiv) return;  // if user didn't click a task
+
+  const clickedId = Number(taskDiv.dataset.id);
+
+  console.log(clickedId);
+
+  const selectedTask = allTasks.find(task => task.id === clickedId);
+
+  console.log(selectedTask);
+});
+
 //Give active class to todo when todo button is clicked
 todoBtn.addEventListener('click', function() {
   document.querySelector('.todo-page').classList.add('active');
@@ -395,3 +410,5 @@ searchInput.addEventListener('input', function() {
 renderAllTasks()
 renderTodos()
 countTasks();
+renderProgress();
+renderDone();
