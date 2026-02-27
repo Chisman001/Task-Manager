@@ -23,6 +23,8 @@ const updateTaskBtn = document.getElementById('update-task');
 const todoChoice = document.querySelector('.todoi')
 const progressChoice = document.querySelector('.progressi')
 const doneChoice = document.querySelector('.donei')
+const noTitleError = document.getElementById('todo-title-error');
+const noDescError = document.getElementById('todo-desc-error');
 
 
 // when see all is clicked show next page
@@ -45,6 +47,8 @@ openModalBtn.addEventListener('click', function() {
 //Close modal when close button is clicked
 closeModalBtn.addEventListener('click', function() {
   document.querySelector('.modal').classList.remove('active1');
+  todoTitleInput.value = '';
+  todoDescInput.value = '';
 });
 
 //declaring todos array progress and done arrays
@@ -93,7 +97,37 @@ addTodoBtn.addEventListener('click', function (e) {
 
     document.querySelector('.modal').classList.remove('active1');
   }
+  else if(!title){
+    noTitleError.style.display = 'block';
+    setTimeout(() => {      noTitleError.style.display = 'none';
+    }, 3000);
+  }
+  else if(!desc){
+    noDescError.style.display = 'block';
+    setTimeout(() => {      noDescError.style.display = 'none';
+    }, 3000);
+  }
 });
+
+// Make empty task list show "No tasks added yet" message
+function checkEmpty() {
+  if (allTasks.length === 0) {
+    taskList.innerHTML = `
+    <div class="empty">
+      <h3>📝 No tasks yet</h3>
+      <p>It seems there are no tasks added</p>
+    </div>
+    `;
+
+    todoDisplay.innerHTML = `
+    <div class="empty-todo">
+      <i class="fa-solid fa-clipboard fa-5x"></i>
+      <h3>📝 No tasks yet</h3>
+      <p>It seems there are no tasks added</p>
+    </div>
+    `;
+  }
+}
 
 // Render todos function
 function renderTodos() {
@@ -111,6 +145,8 @@ function renderTodos() {
       `;
       todoContent.appendChild(div);
     });
+
+  checkEmpty();
 }
 
 
@@ -131,6 +167,8 @@ function renderProgress() {
       `;
       progressContent.appendChild(div);
     });
+
+  checkEmpty();
 }
 //Render done function
 function renderDone() {
@@ -149,6 +187,8 @@ function renderDone() {
       `;
       doneContent.appendChild(div);
     });
+
+  checkEmpty();
 }
 
 
@@ -177,6 +217,8 @@ function renderAllTasks() {
     taskList.appendChild(task);
     todoDisplay.appendChild(todoItem);
   });
+
+  checkEmpty();
 }
 
 // Move task to different status

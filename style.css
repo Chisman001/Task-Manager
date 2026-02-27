@@ -220,7 +220,7 @@ body{
   position: fixed;
   top: 0;
   left: 0;
-
+  backdrop-filter: blur(2px);
   width: 100%;
   height: 100%;
   
@@ -281,23 +281,23 @@ body{
 
 .task-modal-content{
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 20px 24px;
+  border-radius: 12px;
   width: 300px;
   min-height: 160px;
 }
 
 .update-modal-content{
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 20px 24px;
+  border-radius: 12px;
   width: 300px;
 }
 
 .modal-content {
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 20px 24px;
+  border-radius: 12px;
   width: 300px;
 }
 
@@ -370,9 +370,9 @@ body{
   height: 120px;
   background: #e66767c5;
   padding: 15px;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow-y: auto;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   margin-bottom: 10px;
   color: #fff;
   cursor: pointer;
@@ -392,8 +392,8 @@ body{
 } 
 
 .tasks-list .task:hover{
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-3px);
 }
 
 ::-webkit-scrollbar{
@@ -485,6 +485,24 @@ body{
   cursor: pointer;
 }
 
+.input-title p{
+  margin-top: -8px;
+  margin-bottom: 6px;
+  display: none;
+}
+
+.description p{
+  margin-top: -12px;
+  margin-bottom: 8px;
+  display: none;
+}
+
+.error-message{
+  margin-left: 10px;
+  color: #f44336;
+  font-size: 14px;
+}
+
 .icon-section .todoi i {
   background: #fde2e4;
   color: #e63946;
@@ -550,4 +568,139 @@ body{
 .done-page .header-section h2{
   position: relative;
   right: 20px;
+}
+
+/* styling when tasks are empty */
+.empty {
+  text-align: center;
+  padding: 25px 40px;
+  border-radius: 10px;
+}
+
+.empty h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+.empty p {
+  font-size: 16px;
+  color: #555;
+  opacity: 0.7;
+}
+
+.empty-todo{
+  text-align: center;
+  padding: 30px 30px;
+}
+
+.empty-todo i{
+  font-size: 240px;
+  color: #c1c2c2;
+  margin-bottom: 15px;  
+}
+
+.empty-todo h3{
+  font-size: 28px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  opacity: 0.6;
+}
+
+.empty-todo p{
+  font-size: 18px;
+  color: #555;
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
+  .container {
+    width: 100vw;
+    padding: 7px;
+    box-shadow: none;
+    overflow-x: hidden;
+  }
+
+  body{
+    background: #fff;
+  }
+
+  .status {
+    gap: 30px;
+  }
+
+  .page .header-section {
+    gap: 30px;
+  }
+
+  .icon i {
+  width: 49px;
+  height: 49px;
+  line-height: 49px;
+  font-size: 18px;
+  }
+
+  .second-page .header-section{
+  margin-bottom: 23px;
+  gap: 70px;
+  }
+
+  .second-page .header-section i{
+  font-size: 19px;
+  margin-left: 9px;
+  padding: 7px;
+  }
+
+  .second-page .header-section button{
+  padding: 8px 15px;
+  border-radius: 7px;
+  font-size: 14.6px;
+  }
+
+  .modal-content, .task-modal-content, .update-modal-content {
+  padding: 15px;
+  border-radius: 8px;
+  width: 240px;
+  }
+
+  .task-modal-content h2, .update-modal h2{
+  margin-bottom: 18px;
+  font-size: 24px;
+  margin-top: 5.5px;
+  }
+
+  .todo-display, .todo-content, .progress-content, .done-content{
+  gap: 10px;
+  overflow-y: auto;
+  
+}
+
+.todo-display .task, .todo-content .task, .progress-content .task, .done-content .task{
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 100px;
+  margin-top: 8px;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.todo-display .task:hover, .todo-content .task:hover, .progress-content .task:hover, .done-content .task:hover{
+  transform: scale(1.022);
+}
+
+.todo-display .task h3, .todo-content .task h3, .progress-content .task h3, .done-content .task h3{
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+.todo-display .task p, .todo-content .task p, .progress-content .task p, .done-content .task p{
+  font-size: 15px;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.todo-page.active, .progress-page.active, .done-page.active{
+  transform: scale(1.0);
+}
 }

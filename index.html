@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Manager</title>
   <link rel="stylesheet" href="style.css">
+
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <path fill="green" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l45.3-45.3c12.5-12.5 32.8-12.5 45.3 0L160 284.7 393.4 51.4c12.5-12.5 32.8-12.5 45.3 0l0 0z"/>
+  </svg>'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -60,8 +65,14 @@
         <div class="modal-content">
           <h2>Add Todo</h2>
 
-          <input type="text" id="todo-title" placeholder="Todo title">
-          <textarea id="todo-desc" placeholder="Description"></textarea>
+          <div class="input-title">
+            <input type="text" id="todo-title" placeholder="Todo title">
+            <p id="todo-title-error" class="error-message">Title can't be empty</p>
+          </div>
+          <div class="description">
+            <textarea id="todo-desc" placeholder="Description"></textarea>
+            <p id="todo-desc-error" class="error-message">Description can't be empty</p>
+          </div>
 
           <div class="actions">
             <button id="add-todo">Add</button>
