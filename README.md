@@ -1,53 +1,77 @@
-# 📝 Task Manager (Todo App)
+# Task Manager
 
-A modern task management web application built with vanilla JavaScript.  
-Users can create, update, delete, search, and organize tasks by status (Todo, In Progress, Done).
+A full-stack task management web app built with Next.js 14, Supabase, and Tailwind CSS.
 
----
+## Features
 
-## 🚀 Live Demo
+- **Authentication** — Secure login via Supabase Auth with middleware-protected routes
+- **Dashboard** — Personalised greeting, live task counts, upcoming reminders (within 24h), and a recent tasks strip
+- **Task Management** — Create, edit, delete, and move tasks between statuses
+- **Status Views** — Dedicated pages for To-Do, In Progress, and Done tasks
+- **Search** — Client-side search across all tasks from the dashboard
+- **Reminders** — Optional reminder date/time per task, surfaced on the dashboard when due within 24h
+- **Due Dates** — Optional due date per task
+- **Settings** — Update display name and avatar
 
-🔗 https://chisom-task-manager.netlify.app
+## Tech Stack
 
----
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router, React Server Components) |
+| Language | TypeScript |
+| Database & Auth | Supabase (PostgreSQL + Supabase Auth) |
+| Styling | Tailwind CSS |
+| UI Components | shadcn/ui, Radix UI, Base UI |
+| Icons | Lucide React |
+| Deployment | Vercel (recommended) |
 
-## 📌 Features
+## Getting Started
 
-- ✅ Add new tasks with title and description
-- ✏️ Update existing tasks
-- 🗑️ Delete tasks
-- 🔄 Move tasks between:
-  - Todo
-  - In Progress
-  - Done
-- 🔍 Search tasks by title or description
-- 💾 Persistent storage using localStorage
-- 📱 Responsive UI design
-- 🎨 Clean card-based interface
-- 📊 Real-time task counter
+### Prerequisites
 
----
+- Node.js 18+
+- A [Supabase](https://supabase.com) project
 
-## 🛠️ Tech Stack
+### Setup
 
-- HTML5
-- CSS3
-- JavaScript (ES6)
-- Local Storage API
-- Font Awesome Icons
+1. Clone the repo and install dependencies:
 
----
+   ```bash
+   cd task-manager-app
+   npm install
+   ```
 
-## 🧠 What I Learned
+2. Create a `.env.local` file in `task-manager-app/`:
 
-- Managing application state using arrays
-- Using localStorage to persist data
-- DOM manipulation with JavaScript
-- Event delegation
-- Using unique IDs for task management
-- Structuring multi-view UI without frameworks
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
----
+3. Run the development server:
 
-## 📂 Project Structure
+   ```bash
+   npm run dev
+   ```
 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Project Structure
+
+```
+task-manager-app/
+├── app/
+│   ├── (auth)/login/        # Login page
+│   └── (dashboard)/         # Protected dashboard routes
+│       ├── page.tsx          # Dashboard home
+│       ├── tasks/            # All tasks
+│       ├── todo/             # To-Do tasks
+│       ├── progress/         # In-Progress tasks
+│       ├── done/             # Completed tasks
+│       └── settings/         # User settings
+├── components/               # Reusable UI components
+├── lib/
+│   ├── actions/              # Server actions (tasks, auth, profile)
+│   └── supabase/             # Supabase client helpers
+└── middleware.ts             # Auth route protection
+```
