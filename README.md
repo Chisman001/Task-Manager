@@ -2,6 +2,8 @@
 
 A full-stack task management web app built with Next.js 14, Supabase, and Tailwind CSS.
 
+**Live:** [task-manager-fjkv.vercel.app](https://task-manager-fjkv.vercel.app)
+
 ## Features
 
 - **Authentication** — Secure login via Supabase Auth with middleware-protected routes
